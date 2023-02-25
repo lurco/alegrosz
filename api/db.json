@@ -2,9 +2,9 @@
   "products": [
     {
       "id": 1,
-      "name": "Pomidor czerwony",
+      "name": "Pomidor żółty",
       "description": "",
-      "price": 3.19,
+      "price": 4.50,
       "category": "warzywa",
       "subcategories": "pomidory",
       "image": "",
@@ -12,9 +12,9 @@
     },
     {
       "id": 2,
-      "name": "Pomidor żółty",
+      "name": "Pomidor czerwony",
       "description": "",
-      "price": 4.50,
+      "price": 3.19,
       "category": "warzywa",
       "subcategories": "pomidory",
       "image": "",

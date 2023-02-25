@@ -5,6 +5,7 @@ import SortByPrice from "./SortByPrice";
 function Products() {
     const [productList, setProductList] = useState([]);
     const [query, setQuery] = useState('');
+    const [priceOrder, setPriceOrder] = useState('');
 
     useEffect(() => {
 
@@ -26,13 +27,26 @@ function Products() {
         return await response.json();
     }
 
+    function handleSortByPrice(a, b) {
+        switch (priceOrder){
+            case '':
+                return 0;
+            case 'ascending':
+                return a.price - b.price;
+            case 'descending':
+                return b.price - a.price;
+        }
+    }
+
     return (
         <div>
 
             <Search
                 setQuery={setQuery}
             />
-            <SortByPrice/>
+            <SortByPrice
+                setPriceOrder={setPriceOrder}
+            />
 
             <h2>Products</h2>
 
@@ -41,9 +55,10 @@ function Products() {
                     .filter(({name, description}) => `${name} ${description}`
                         .toLowerCase()
                         .includes(query.toLowerCase()))
+                    .sort(handleSortByPrice)
                     .map((product) => (
                         <li key={product.id}>
-                            {product.name}
+                            {product.name} {product.price}
                         </li>
                     ))
                 }
