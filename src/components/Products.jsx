@@ -1,7 +1,9 @@
 import {useEffect, useState} from "react";
+import Search from "./Search";
 
 function Products() {
     const [productList, setProductList] = useState([]);
+    const [query, setQuery] = useState('');
 
     useEffect(() => {
 
@@ -24,14 +26,24 @@ function Products() {
 
     return (
         <div>
-            Products
+
+            <Search
+                setQuery={setQuery}
+            />
+
+            <h2>Products</h2>
 
             <ul>
-                {productList.map((product) => (
-                <li key={product.id}>
-                    {product.name}
-                </li>
-                ))}
+                {productList
+                    .filter(({name, description}) => `${name} ${description}`
+                        .toLowerCase()
+                        .includes(query.toLowerCase()))
+                    .map((product) => (
+                        <li key={product.id}>
+                            {product.name}
+                        </li>
+                    ))
+                }
             </ul>
         </div>
     );
