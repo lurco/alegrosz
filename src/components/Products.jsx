@@ -1,48 +1,38 @@
 import {useEffect, useState} from "react";
 
-const productsList = [
-    {
-        "id": 1,
-        "name": "Pomidor czerwony",
-        "description": "",
-        "price": 3.19,
-        "category": "warzywa",
-        "subcategories": "pomidory",
-        "image": "",
-        "comments": []
-    },
-    {
-        "id": 2,
-        "name": "Pomidor żółty",
-        "description": "",
-        "price": 4.50,
-        "category": "warzywa",
-        "subcategories": "pomidory",
-        "image": "",
-        "comments": []
-    },
-    {
-        "id": 3,
-        "name": "Pomidor malinowy",
-        "description": "",
-        "price": 5,
-        "category": "warzywa",
-        "subcategories": "pomidory",
-        "image": "",
-        "comments": []
-    }
-]
-
 function Products() {
-    const [listOfProducts, setListOfProducts] = useState([]);
+    const [productList, setProductList] = useState([]);
 
     useEffect(() => {
-        setListOfProducts(productsList)
+
+        const controller = new AbortController();
+
+        getProducts(controller.signal).then((data) => {
+            setProductList(data)
+        });
+
+        return () => {
+            controller.abort();
+        }
     }, [])
+
+    async function getProducts(signal){
+        const response = await fetch('/products/', {signal});
+
+        return await response.json();
+    }
 
     return (
         <div>
             Products
+
+            <ul>
+                {productList.map((product) => (
+                <li key={product.id}>
+                    {product.name}
+                </li>
+                ))}
+            </ul>
         </div>
     );
 }
