@@ -18,6 +18,7 @@ function Products() {
         }
     }, [])
 
+
     async function getProducts(signal){
         const response = await fetch('/products/', {signal});
 
